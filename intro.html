@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>m0ck1ngb1rd // AI Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0a0a0a; color: #e5e7eb; overflow-x: hidden; }
+        .neon-border { border: 1px solid #ff00ff; box-shadow: 0 0 10px #ff00ff; }
+        .neon-text { color: #ff00ff; text-shadow: 0 0 5px #ff00ff; }
+        .card:hover { transform: translateY(-5px); transition: all 0.3s ease; border-color: #ff00ff; }
+
+        /* --- STILI PER L'EFFETTO GLITCH --- */
+        .glitch-wrapper {
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .glitch-title {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            grid-column-start: 1;
+            grid-row-start: 1;
+            z-index: 1;
+        }
+
+        /* I due strati "fantasma" che appaiono in hover */
+        .glitch-title::before,
+        .glitch-title::after {
+            content: "m0ck1ngb1rd"; /* DEVE ESSERE UGUALE AL TITOLO */
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0; /* Invisibili di default */
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Al passaggio del mouse, attiva gli strati e l'animazione */
+        .glitch-wrapper:hover .glitch-title::before {
+            opacity: 0.8;
+            color: #00ffff; /* Colore fantasma 1 (Ciano) */
+            z-index: -1;
+            animation: glitch-anim 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+        }
+
+        .glitch-wrapper:hover .glitch-title::after {
+            opacity: 0.8;
+            color: #ff00ff; /* Colore fantasma 2 (Rosa, per contrasto) */
+            z-index: -2;
+            animation: glitch-anim 0.3s cubic-bezier(.25,.46,.45,.94) reverse both infinite;
+        }
+
+        /* Definizione dell'animazione glitch (distorsione casuale) */
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+    <header class="p-8 border-b border-gray-800 flex justify-between items-center relative z-10">
+        <div class="glitch-wrapper">
+            <h1 class="glitch-title text-4xl font-black tracking-tighter uppercase relative">m0ck1ngb1rd</h1>
+            <p class="text-xs tracking-widest text-gray-500 uppercase mt-1 z-10 relative">Cybernetic AI Laboratory</p>
+        </div>
+        <nav class="space-x-6 relative z-10">
+            <a href="#" class="hover:text-pink-500 transition">Gallery</a>
+            <a href="#" class="hover:text-pink-500 transition">About</a>
+        </nav>
+    </header>
+
+    <section class="max-w-6xl mx-auto py-20 px-8 text-center relative z-0">
+        <div class="mb-8 inline-block p-4 rounded-full border-2 border-pink-500 animate-pulse bg-gray-900 shadow-lg shadow-pink-500/20">
+            <span class="text-6xl">🐦‍⬛</span> 
+        </div>
+        <h2 class="text-5xl font-bold mb-4 tracking-tight">Synthesizing Reality.</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Benvenuti nel nido digitale di m0ck1ngb1rd. Qui l'intelligenza artificiale smette di simulare e inizia a creare.</p>
+    </section>
+
+    <main class="max-w-6xl mx-auto pb-20 px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="card bg-gray-900 border border-gray-800 rounded-lg overflow-hidden p-4 group">
+                <div class="h-48 bg-gray-800 rounded mb-4 flex items-center justify-center text-gray-600 group-hover:bg-gray-700 transition">
+                    [Carica Immagine IA]
+                </div>
+                <h3 class="font-bold text-pink-500">Flux Dreams #01</h3>
+                <p class="text-sm text-gray-400">Generato con: Flux.1 Dev</p>
+            </div>
+
+            <div class="card bg-gray-900 border border-gray-800 rounded-lg overflow-hidden p-4 group">
+                <div class="h-48 bg-gray-800 rounded mb-4 flex items-center justify-center text-gray-600 group-hover:bg-gray-700 transition">
+                    [Carica Video Veo/Sora]
+                </div>
+                <h3 class="font-bold text-pink-500">Cyber City Loop</h3>
+                <p class="text-sm text-gray-400">Generato con: Veo</p>
+            </div>
+
+            <div class="card bg-gray-900 border border-gray-800 rounded-lg overflow-hidden p-4 group">
+                <div class="h-48 bg-gray-800 rounded mb-4 flex items-center justify-center text-gray-600 group-hover:bg-gray-700 transition">
+                    [Carica Traccia Lyria]
+                </div>
+                <h3 class="font-bold text-pink-500">Synth Echoes</h3>
+                <p class="text-sm text-gray-400">Generato con: Lyria 3</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="text-center py-10 border-t border-gray-800 text-gray-600 text-sm">
+        &copy; 2026 m0ck1ngb1rd // Protocollo Attivo
+    </footer>
+
+</body>
+</html>
