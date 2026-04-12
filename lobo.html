@@ -2,56 +2,65 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Lobo: Family Affairs // m0ck1ngb1rd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobo: Fraggin' Hearts // m0ck1ngb1rd</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0a0a0a; color: #e5e7eb; }
+        body { background-color: #0a0a0a; color: #e5e7eb; min-height: 100vh; }
         .neon-text { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
         .neon-border { border: 1px solid #ff00ff; box-shadow: 0 0 15px rgba(255, 0, 255, 0.3); }
-        .nav-btn { background: rgba(255, 0, 255, 0.1); border: 1px solid #ff00ff; transition: all 0.3s; }
+        .nav-btn { background: rgba(255, 0, 255, 0.1); border: 1px solid #ff00ff; transition: all 0.3s; z-index: 50; }
         .nav-btn:hover { background: #ff00ff; color: black; box-shadow: 0 0 20px #ff00ff; }
         
-        /* Miglioramento visualizzazione tavola */
-        .comic-container {
-            max-width: 1000px; /* Più largo su desktop */
+        /* Container del fumetto */
+        .comic-wrapper {
+            max-width: 900px;
             width: 100%;
+            transition: max-width 0.4s ease;
+            cursor: zoom-in;
         }
+
+        /* Classe per lo Zoom Reale */
+        .comic-wrapper.zoomed {
+            max-width: 1536px; /* La larghezza originale che dicevi */
+            cursor: zoom-out;
+        }
+
         #comic-page {
             width: 100%;
             height: auto;
-            cursor: zoom-in;
-            transition: transform 0.2s ease;
+            display: block;
         }
-        /* Zoom al click per leggere meglio i testi piccoli */
-        #comic-page:active {
-            transform: scale(1.1);
+
+        .controls-sticky {
+            position: sticky;
+            bottom: 20px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 0, 255, 0.3);
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen items-center p-2 md:p-8">
+<body class="flex flex-col items-center p-2 md:p-8">
 
-    <header class="text-center mb-6 z-10">
+    <header class="text-center mb-6">
         <h1 class="text-2xl md:text-4xl font-black neon-text uppercase tracking-tighter">Lobo: Fraggin' Hearts</h1>
-        <p class="text-gray-500 text-[10px] uppercase tracking-widest">Usa le frecce o i tasti sotto | Clicca la tavola per zoom</p>
+        <p class="text-gray-500 text-[10px] uppercase tracking-widest mt-1">Clicca sulla tavola per lo ZOOM ORIGINALE</p>
     </header>
 
-    <main class="comic-container relative flex flex-col items-center z-10">
-        
-        <div class="neon-border bg-black rounded-lg mb-6 w-full overflow-hidden">
-            <img id="comic-page" src="BRA01.png" alt="Lobo Comic Page">
-        </div>
-
-        <div class="flex flex-col items-center gap-4 w-full mb-10">
-            <div class="flex items-center justify-center gap-4">
-                <button onclick="prevPage()" class="nav-btn px-6 py-3 rounded-full uppercase font-black text-xs">Indietro</button>
-                <span id="page-counter" class="font-mono text-xl neon-text min-w-[80px] text-center">1 / 13</span>
-                <button onclick="nextPage()" class="nav-btn px-6 py-3 rounded-full uppercase font-black text-xs">Avanti</button>
-            </div>
-        </div>
+    <main id="main-container" class="comic-wrapper neon-border bg-black rounded-lg mb-20 overflow-hidden" onclick="toggleZoom()">
+        <img id="comic-page" src="BRA01.png" alt="Lobo Comic Page">
     </main>
 
-    <footer class="pb-10">
+    <nav class="controls-sticky flex items-center justify-center gap-4 z-50">
+        <button onclick="event.stopPropagation(); prevPage()" class="nav-btn px-6 py-2 rounded-full uppercase font-black text-xs">Indietro</button>
+        <span id="page-counter" class="font-mono text-lg neon-text min-w-[70px] text-center">1 / 13</span>
+        <button onclick="event.stopPropagation(); nextPage()" class="nav-btn px-6 py-2 rounded-full uppercase font-black text-xs">Avanti</button>
+    </nav>
+
+    <footer class="mt-10 mb-10">
         <a href="fumetti.html" class="text-gray-500 hover:text-pink-500 transition-all text-xs font-bold uppercase tracking-widest">
             &larr; Torna all'Archivio
         </a>
@@ -65,17 +74,24 @@
         ];
         
         let currentIndex = 0;
+        const mainContainer = document.getElementById('main-container');
         const imgElement = document.getElementById('comic-page');
         const counterElement = document.getElementById('page-counter');
 
+        function toggleZoom() {
+            mainContainer.classList.toggle('zoomed');
+        }
+
         function updatePage() {
-            imgElement.style.opacity = "0.5";
+            imgElement.style.opacity = "0.3";
             setTimeout(() => {
                 imgElement.src = pages[currentIndex];
                 counterElement.innerText = `${currentIndex + 1} / ${pages.length}`;
                 imgElement.style.opacity = "1";
+                // Quando cambi pagina, togliamo lo zoom e torniamo su
+                mainContainer.classList.remove('zoomed');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 100);
+            }, 150);
         }
 
         function nextPage() { if (currentIndex < pages.length - 1) { currentIndex++; updatePage(); } }
@@ -84,10 +100,6 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === "ArrowRight") nextPage();
             if (e.key === "ArrowLeft") prevPage();
-        });
-    </script>
-</body>
-</html>
         });
     </script>
 </body>
