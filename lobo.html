@@ -2,82 +2,62 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lobo: Fraggin' Hearts // m0ck1ngb1rd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Lobo: Family Affairs // m0ck1ngb1rd</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0a0a0a; color: #e5e7eb; overflow-x: hidden; }
+        body { background-color: #0a0a0a; color: #e5e7eb; }
         .neon-text { color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
         .neon-border { border: 1px solid #ff00ff; box-shadow: 0 0 15px rgba(255, 0, 255, 0.3); }
         .nav-btn { background: rgba(255, 0, 255, 0.1); border: 1px solid #ff00ff; transition: all 0.3s; }
         .nav-btn:hover { background: #ff00ff; color: black; box-shadow: 0 0 20px #ff00ff; }
         
-        /* Effetto Glitch per il Titolo */
-        .glitch-wrapper { display: grid; align-items: center; justify-content: center; position: relative; }
-        .glitch-title { color: #ff00ff; text-shadow: 0 0 5px #ff00ff; grid-column-start: 1; grid-row-start: 1; z-index: 1; }
-        .glitch-title::before, .glitch-title::after { 
-            content: "Lobo: Fraggin' Hearts"; 
-            position: absolute; top: 0; left: 0; opacity: 0; width: 100%; height: 100%; 
+        /* Miglioramento visualizzazione tavola */
+        .comic-container {
+            max-width: 1000px; /* Più largo su desktop */
+            width: 100%;
         }
-        .glitch-wrapper:hover .glitch-title::before { opacity: 0.8; color: #00ffff; z-index: -1; animation: glitch-anim 0.3s infinite; }
-        .glitch-wrapper:hover .glitch-title::after { opacity: 0.8; color: #ff00ff; z-index: -2; animation: glitch-anim 0.3s reverse infinite; }
-        
-        @keyframes glitch-anim {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
+        #comic-page {
+            width: 100%;
+            height: auto;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
         }
-
-        #comic-page { transition: opacity 0.2s ease-in-out; }
+        /* Zoom al click per leggere meglio i testi piccoli */
+        #comic-page:active {
+            transform: scale(1.1);
+        }
     </style>
 </head>
-<body class="flex flex-col min-h-screen items-center p-4 md:p-8">
+<body class="flex flex-col min-h-screen items-center p-2 md:p-8">
 
-    <header class="text-center mb-10 z-10">
-        <div class="glitch-wrapper">
-            <h1 class="glitch-title text-3xl md:text-5xl font-black uppercase tracking-tighter relative cursor-default">Lobo: Fraggin' Hearts</h1>
-        </div>
-        <p class="text-pink-400 text-xs md:text-sm italic mt-2 tracking-widest uppercase opacity-80">m0ck1ngb1rd fan-comic laboratory</p>
+    <header class="text-center mb-6 z-10">
+        <h1 class="text-2xl md:text-4xl font-black neon-text uppercase tracking-tighter">Lobo: Fraggin' Hearts</h1>
+        <p class="text-gray-500 text-[10px] uppercase tracking-widest">Usa le frecce o i tasti sotto | Clicca la tavola per zoom</p>
     </header>
 
-    <main class="relative max-w-4xl w-full flex flex-col items-center z-10">
+    <main class="comic-container relative flex flex-col items-center z-10">
         
-        <div class="neon-border bg-black/80 p-1 md:p-2 rounded-lg mb-6">
-            <img id="comic-page" src="BRA01.png" alt="Lobo Comic Page" class="rounded shadow-2xl max-h-[75vh] md:max-h-[80vh] w-auto object-contain">
+        <div class="neon-border bg-black rounded-lg mb-6 w-full overflow-hidden">
+            <img id="comic-page" src="BRA01.png" alt="Lobo Comic Page">
         </div>
 
-        <div class="flex flex-col items-center gap-4 w-full">
-            <div class="flex items-center justify-center gap-6">
-                <button onclick="prevPage()" class="nav-btn px-8 py-3 rounded-full uppercase font-black text-xs tracking-widest">
-                    &lt; Indietro
-                </button>
-                
-                <span id="page-counter" class="font-mono text-xl neon-text min-w-[80px] text-center">
-                    1 / 13
-                </span>
-                
-                <button onclick="nextPage()" class="nav-btn px-8 py-3 rounded-full uppercase font-black text-xs tracking-widest">
-                    Avanti &gt;
-                </button>
+        <div class="flex flex-col items-center gap-4 w-full mb-10">
+            <div class="flex items-center justify-center gap-4">
+                <button onclick="prevPage()" class="nav-btn px-6 py-3 rounded-full uppercase font-black text-xs">Indietro</button>
+                <span id="page-counter" class="font-mono text-xl neon-text min-w-[80px] text-center">1 / 13</span>
+                <button onclick="nextPage()" class="nav-btn px-6 py-3 rounded-full uppercase font-black text-xs">Avanti</button>
             </div>
-            
-            <p class="text-gray-500 text-[10px] uppercase tracking-widest mt-2">
-                Usa le frecce della tastiera o i tasti qui sopra
-            </p>
         </div>
     </main>
 
-    <footer class="mt-auto py-10 z-10">
-        <a href="index.html" class="text-gray-500 hover:text-pink-500 transition-all text-sm uppercase tracking-[0.3em] font-bold">
-            &larr; TORNA ALLA HOME
+    <footer class="pb-10">
+        <a href="fumetti.html" class="text-gray-500 hover:text-pink-500 transition-all text-xs font-bold uppercase tracking-widest">
+            &larr; Torna all'Archivio
         </a>
     </footer>
 
     <script>
-        // Lista dei file che hai caricato (Assicurati che i nomi siano identici!)
         const pages = [
             "BRA01.png", "BRA02.png", "BRA03.png", "BRA04.png", 
             "BRA05.png", "BRA06.png", "BRA07.png", "BRA08.png", 
@@ -89,34 +69,25 @@
         const counterElement = document.getElementById('page-counter');
 
         function updatePage() {
-            imgElement.style.opacity = "0"; // Effetto dissolvenza quando cambi pagina
-            
+            imgElement.style.opacity = "0.5";
             setTimeout(() => {
                 imgElement.src = pages[currentIndex];
                 counterElement.innerText = `${currentIndex + 1} / ${pages.length}`;
                 imgElement.style.opacity = "1";
-                window.scrollTo({ top: 0, behavior: 'smooth' }); // Torna su quando cambi pagina
-            }, 150);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
         }
 
-        function nextPage() {
-            if (currentIndex < pages.length - 1) {
-                currentIndex++;
-                updatePage();
-            }
-        }
+        function nextPage() { if (currentIndex < pages.length - 1) { currentIndex++; updatePage(); } }
+        function prevPage() { if (currentIndex > 0) { currentIndex--; updatePage(); } }
 
-        function prevPage() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updatePage();
-            }
-        }
-
-        // Controllo con le frecce della tastiera
         document.addEventListener('keydown', (e) => {
             if (e.key === "ArrowRight") nextPage();
             if (e.key === "ArrowLeft") prevPage();
+        });
+    </script>
+</body>
+</html>
         });
     </script>
 </body>
